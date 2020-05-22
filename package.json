@@ -1,0 +1,19 @@
+{
+  "name": "ambassador",
+  "version": "1.0.0",
+  "description": "URL metadata API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Xevolab",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "urllib": "^2.35.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
