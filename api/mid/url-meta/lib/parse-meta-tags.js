@@ -117,10 +117,9 @@ module.exports = function (body) {
 
   try {
     res.schema = JSON.parse($('script[type="application\/ld\+json"]').contents().first().text());
-  } catch (err) {
-    console.error("SCHEMA_PARSING", err);
   }
-
-  return res;
+  finally {
+    return res;
+  }
 
 }

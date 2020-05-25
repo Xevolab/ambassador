@@ -32,17 +32,18 @@ router.get("/a", (req, res) => {
 
   // Parse query string
   let accParams = ["basic", "tags", "card", "schema"];
-  let params = [];
+  let params = {};
   for (var i in accParams)
     params[accParams[i]] = (typeof req.query[accParams[i]] === "string");
 
   const t0 = performance.now();
   collect(u, params).then((r) => {
     const t1 = performance.now();
-    console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
-    res.status(200).json({okay: true, params, payload: r})
+
+    res.status(200).json({okay: true, params, payload: r, service: Math.round(t1 - t0)+"ms", cached: false})
   }).catch((e) => {
-    res.status(200).json({okay: false, params, error: e})
+
+    res.status(200).json({okay: false, params, error: e, service: Math.round(t1 - t0)+"ms"})
   })
 
 })

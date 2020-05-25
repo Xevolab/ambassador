@@ -32,7 +32,7 @@ module.exports = function (url, options) {
 
       var parsedDom = {};
       // Parse TAGS only if HTML mime found and required
-      if (parsedHeaders.mime.type === "html" && (options.card || options.tag || options.schema)) {
+      if (parsedHeaders.mime.type === "html" && (options.card || options.tags || options.schema)) {
         try {
           parsedDom = parseDom(response.data);
         } catch (e) {
@@ -60,8 +60,10 @@ module.exports = function (url, options) {
             return reject({errorCode: 'GEN_ERROR', retryable: false});
           }
         }
-        else
+        else {
+          console.error(err);
           return reject({errorCode: 'RES_UNRESP', retryable: true});
+        }
       } else {
         // Something happened in setting up the request that triggered an Error
         console.error(err);
