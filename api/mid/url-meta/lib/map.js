@@ -49,7 +49,7 @@ const iterativeMap = (data, t, r) => {
 const cleanString = function (value) {
   if (typeof value !== 'string') return value
   // remove any newline characters, replace with space:
-  value = value.replace(/\n|\r/gm, ' ')
+  value = value.replace(/\n|\r|\t/gm, ' ')
   // remove double (or more) spaces, replace with single space:
   value = value.replace(/( {2,})/gm, ' ')
   return value
