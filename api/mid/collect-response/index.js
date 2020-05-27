@@ -13,9 +13,11 @@ module.exports = (u, tags) => { return new Promise((resolve, reject) => {
     }
 
     if (tags.tags)
-      res.tags = data.tags;
+      res.tags = data.tags || null;
     if (tags.schema)
-      res.schema = data.schema;
+      res.schema = data.schema || null;
+    if (tags.card)
+      res.card = require('./lib/card')(data.request, data.tags || null, data.schema || null)
 
     return resolve(res)
 

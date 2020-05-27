@@ -40,10 +40,10 @@ router.get("/a", (req, res) => {
   collect(u, params).then((r) => {
     const t1 = performance.now();
 
-    res.status(200).json({okay: true, params, payload: r, service: Math.round(t1 - t0)+"ms", cached: false})
+    res.status(200).json({okay: true, payload: r, service: Math.round(t1 - t0)+"ms", cached: false})
   }).catch((e) => {
 
-    res.status(200).json({okay: false, params, error: e, service: Math.round(t1 - t0)+"ms"})
+    res.status(200).json({okay: false, error: e, service: Math.round(t1 - t0)+"ms"})
   })
 
 })
