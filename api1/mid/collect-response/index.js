@@ -22,6 +22,7 @@ module.exports = (u, tags) => { return new Promise((resolve, reject) => {
     return resolve(res)
 
   }).catch((e) => {
+    console.log(e);
     return reject(e);
   })
 

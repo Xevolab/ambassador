@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 
 // API entry point
-app.use('/', require('./api/g.js'));
+app.use(['/1/', '/v1/'], require('./api1/g.js'));
 
 // Starting the server
 const PORT = process.env.PORT || 3300;

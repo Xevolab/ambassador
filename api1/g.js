@@ -20,7 +20,7 @@ const collect = require('./mid/collect-response/index.js')
 
 const { PerformanceObserver, performance } = require('perf_hooks');
 
-router.get("/a", (req, res) => {
+router.get("/", (req, res) => {
 
   if (typeof req.query.u === "undefined")
     return res.status(400).json({okay: false})
@@ -42,6 +42,7 @@ router.get("/a", (req, res) => {
 
     res.status(200).json({okay: true, payload: r, service: Math.round(t1 - t0)+"ms", cached: false})
   }).catch((e) => {
+    const t1 = performance.now();
 
     res.status(200).json({okay: false, error: e, service: Math.round(t1 - t0)+"ms"})
   })
