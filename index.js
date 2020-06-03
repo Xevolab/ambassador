@@ -12,18 +12,11 @@ const path = require("path");
 const app = express();
 const http = require('http').createServer(app);
 
-// CORS
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Cache-Control', 'public, max-age=1500');
-  res.header('Content-Type', 'application/json');
-
-  next();
-});
-
-
 // API entry point
 app.use(['/1/', '/v1/'], require('./api1/g.js'));
+
+// Set a static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Starting the server
 const PORT = process.env.PORT || 3300;

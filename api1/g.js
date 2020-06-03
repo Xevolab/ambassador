@@ -16,6 +16,15 @@
 const express = require('express');
 const router = express.Router();
 
+// CORS
+router.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Cache-Control', 'public, max-age=1500');
+  res.header('Content-Type', 'application/json');
+
+  next();
+});
+
 // Redis DB connection
 
 require('dotenv').config();

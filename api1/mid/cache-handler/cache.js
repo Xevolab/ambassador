@@ -2,9 +2,6 @@ const crypto = require("crypto");
 
 const get = (redis, u) => {return new Promise(async (resolve, reject) => {
 
-  // Remove params
-  u = u.split("?")[0];
-
   // Keys as SHA256 hashes of the link
   u = crypto.createHash('sha256').update(u).digest("hex");
 
@@ -21,8 +18,6 @@ const set = (redis, u, p) => {return new Promise(async (resolve, reject) => {
   // Save items to Redis as cache
   // For 1 hour
 
-  // Remove params
-  u = u.split("?")[0];
   // Keys as SHA256 hashes of the link
   u = crypto.createHash('sha256').update(u).digest("hex");
 
