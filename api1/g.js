@@ -67,12 +67,12 @@ const execute = require('./mid/cache-handler/index.js')
 // Performance monitor
 const { PerformanceObserver, performance } = require('perf_hooks');
 
-router.get("/", (req, res) => {
+router.get(["/", "/:u"], (req, res) => {
 
-  if (typeof req.query.u === "undefined")
+  if (typeof req.query.u === "undefined" && typeof req.params.u === "undefined")
     return res.status(400).json({okay: false})
 
-  var u = req.query.u;
+  var u = req.query.u || req.params.u;
 
   if (!RegExp(/^((?:https?:\/\/)?[^./]+(?:\.[^./]+)+(?:\/.*)?)$/gi).test(u))
 		return res.status(400).json({okay: false})

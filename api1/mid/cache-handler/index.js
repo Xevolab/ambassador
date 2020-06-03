@@ -55,8 +55,7 @@ module.exports = (u, params, redis) => { return new Promise((resolve, reject) =>
     }
 
     // Both failed 😱
-    if (res.cache === "failed" && res.collect === "failed") {
-
+    if (res.collect === "failed" && (res.cache === "failed" || res.cache === null)) {
       // Collect just failed --> I still have the error code
       if (which === "collect")
         return reject(payload)
@@ -103,7 +102,7 @@ module.exports = (u, params, redis) => { return new Promise((resolve, reject) =>
     // Both are now in
     //
     // Check how and when the results came back
-    if (res.collect !== "empty" && res.cache !== "empty") {
+    if ((res.collect !== "empty" && res.collect !== "failed") && res.cache !== "empty") {
 
       // Arrived in a weird order and not caught earlier 🤷🏻‍
       if (arrival[0] === "cache" && arrival[1] === "collect" && (res.cache !== "recache" && res.cache !== null && res.cache !== "failed")) {
