@@ -15,8 +15,6 @@ const http = require('http').createServer(app);
 // CORS
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  //res.header("Access-Control-Allow-Method", "GET, OPTIONS");
-  //res.header("Access-Control-Allow-Headers", "X-PINGOTHER, Content-Type");
   res.header('Cache-Control', 'public, max-age=1500');
   res.header('Content-Type', 'application/json');
 

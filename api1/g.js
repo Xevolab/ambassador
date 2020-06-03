@@ -16,8 +16,46 @@
 const express = require('express');
 const router = express.Router();
 
-const collect = require('./mid/collect-response/index.js')
+// Redis DB connection
 
+require('dotenv').config();
+let client = require('redis').createClient({
+  port      : process.env.REDIS_PORT,
+  host      : process.env.REDIS_HOST,
+  password  : process.env.REDIS_PSW,
+  retry_strategy: function(options) {
+    if (options.error && options.error.code === "ECONNREFUSED") {
+      // End reconnecting on a specific error and flush all commands with
+      // a individual error
+      return console.error("The server refused the connection");
+    }
+    if (options.total_retry_time > 1000 * 60 * 15) {
+      // End reconnecting after a specific timeout and flush all commands
+      // with a individual error
+      return console.error("Retry time exhausted");
+    }
+    if (options.attempt > 10) {
+      // End reconnecting with built in error
+      return undefined;
+    }
+    // reconnect after
+    return Math.min(options.attempt * 100, 3000);
+  }
+});
+
+let redis = false;
+client.on('ready', function() {
+  console.log('Redis client connected');
+  redis = client;
+});
+client.on('error', function (err) {
+  console.error("Redis connection error ", err);
+});
+
+// Payload
+const execute = require('./mid/cache-handler/index.js')
+
+// Performance monitor
 const { PerformanceObserver, performance } = require('perf_hooks');
 
 router.get("/", (req, res) => {
@@ -37,10 +75,10 @@ router.get("/", (req, res) => {
     params[accParams[i]] = (typeof req.query[accParams[i]] === "string");
 
   const t0 = performance.now();
-  collect(u, params).then((r) => {
+  execute(u, params, redis).then((r) => {
     const t1 = performance.now();
 
-    res.status(200).json({okay: true, payload: r, service: Math.round(t1 - t0)+"ms", cached: false})
+    res.status(200).json({okay: true, payload: r.p, service: Math.round(t1 - t0)+"ms", cached: r.c})
   }).catch((e) => {
     const t1 = performance.now();
 
