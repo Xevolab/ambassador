@@ -70,24 +70,34 @@ const { PerformanceObserver, performance } = require('perf_hooks');
 router.get(["/", "/:u"], (req, res) => {
 
   if (typeof req.query.u === "undefined" && typeof req.params.u === "undefined")
-    return res.status(400).json({okay: false})
+    return res.status(400).json({okay: false, error: {errorCode: 'INV_URL', retryable: false}})
 
   var u = req.query.u || req.params.u;
 
   if (!RegExp(/^((?:https?:\/\/)?[^./]+(?:\.[^./]+)+(?:\/.*)?)$/gi).test(u))
-		return res.status(400).json({okay: false})
+		return res.status(400).json({okay: false, error: {errorCode: 'INV_URL', retryable: false}})
 
   // Parse query string
-  let accParams = ["basic", "tags", "card", "schema"];
+  let accParams = ["tags", "card", "schema"];
   let params = {};
   for (var i in accParams)
     params[accParams[i]] = (typeof req.query[accParams[i]] === "string");
+
+  // Detect language
+  // Requested --> Req. Headers --> Defaults to en
+  if (req.query.language != null || req.query.lang != null)
+    params.lang = (req.query.language) || (req.query.lang);
+  else {
+    reqLanguage = (req.headers["accept-language"].split(",")[0].substr(0,2)) || null;
+
+    params.lang = (reqLanguage != null ? reqLanguage : "en");
+  }
 
   const t0 = performance.now();
   execute(u, params, redis).then((r) => {
     const t1 = performance.now();
 
-    res.status(200).json({okay: true, payload: r.p, service: Math.round(t1 - t0)+"ms", cached: r.c})
+    res.status(200).json({okay: true, payload: r.p, service: Math.round(t1 - t0)+"ms", cache: r.c})
   }).catch((e) => {
     const t1 = performance.now();
 

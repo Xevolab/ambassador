@@ -1,9 +1,9 @@
 const crypto = require("crypto");
 
-const get = (redis, u) => {return new Promise(async (resolve, reject) => {
+const get = (redis, u, lang) => {return new Promise(async (resolve, reject) => {
 
   // Keys as SHA256 hashes of the link
-  u = crypto.createHash('sha256').update(u).digest("hex");
+  u = lang+"-"+crypto.createHash('sha256').update(u).digest("hex");
 
   redis.get(u, function(err, res) {
     if (err)
@@ -13,13 +13,13 @@ const get = (redis, u) => {return new Promise(async (resolve, reject) => {
   });
 
 })}
-const set = (redis, u, p) => {return new Promise(async (resolve, reject) => {
+const set = (redis, u, p, lang) => {return new Promise(async (resolve, reject) => {
 
   // Save items to Redis as cache
   // For 1 hour
 
   // Keys as SHA256 hashes of the link
-  u = crypto.createHash('sha256').update(u).digest("hex");
+  u = lang+"-"+crypto.createHash('sha256').update(u).digest("hex");
 
   // Add caching information to payload
   p = {data: p, cachedAt: Date.now()}

@@ -6,11 +6,13 @@ module.exports = function (url, options) {
 
   return new Promise((resolve, reject) => {
 
+    // Axios request options
     const requestOpts = {
       url: url,
       method: 'GET',
       headers: {
         'User-Agent': 'X-AMBS',
+        'Accept-Language': (options.lang != 'en' ? options.lang+",en;d=0.8" : 'en')
       },
       maxContentLength: 2621440, // 2.5MB
       maxRedirects: 8,
@@ -29,6 +31,10 @@ module.exports = function (url, options) {
       } catch (e) {
         return reject({errorCode: 'GEN_HEAD_ERROR', retryable: true});
       }
+
+      // No mime found --> No need to try to parse DOM
+      if (parsedHeaders.mime === undefined)
+        return reject({errorCode: 'GEN_DOM_ERROR', retryable: false});
 
       var parsedDom = {};
       // Parse TAGS only if HTML mime found and required

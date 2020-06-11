@@ -24,7 +24,7 @@ module.exports = (u, params, redis) => { return new Promise((resolve, reject) =>
   })
 
   if (redis !== false) {
-    cache.get(redis, u).then((r) => {
+    cache.get(redis, u, params.lang).then((r) => {
       updateWatcher("cache", true, r)
     }).catch((e) => {
       updateWatcher("cache", false, e)
@@ -72,6 +72,10 @@ module.exports = (u, params, redis) => { return new Promise((resolve, reject) =>
       for (var i in params) {
         // A requried param is not available
         // Pretend cache doesn't exist and re-cache
+
+        // Remove lang
+        delete params["lang"];
+
         if (params[i] && res.cache.data[i] === undefined) {
           console.log("Re-caching ", u);
           res.cache = "recache";
@@ -117,7 +121,7 @@ module.exports = (u, params, redis) => { return new Promise((resolve, reject) =>
 
       // Update cache
       console.log("Updating cache for ", u);
-      return cache.set(redis, u, res.collect).catch((e) => {
+      return cache.set(redis, u, res.collect, params.lang).catch((e) => {
         console.error("Redis set error ", e);
       })
     }
