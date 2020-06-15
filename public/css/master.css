@@ -1,0 +1,240 @@
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: #000000;
+  overflow-x: hidden; }
+  body .view {
+    background-color: #000000; }
+    body .view .top-blind, body .view .bottom-blind {
+      background-color: #000000;
+      position: fixed;
+      width: 100vw;
+      left: 0;
+      height: calc((100vh - 700px)/2);
+      z-index: 1000; }
+    body .view .top-blind {
+      top: 0; }
+    body .view .bottom-blind {
+      bottom: 0; }
+  body .container {
+    width: 700px;
+    min-height: 700px;
+    margin: auto;
+    padding: calc((100vh - 700px)/2) 0;
+    overflow-x: hidden;
+    background-color: #1A1A1A;
+    color: white;
+    font-family: "Inter", "sans-serif"; }
+  body nav.sidebar {
+    max-width: 225px;
+    padding-left: 50px;
+    padding-right: 25px;
+    padding-top: 50px;
+    position: fixed;
+    z-index: 700; }
+    body nav.sidebar .image-container img {
+      width: calc(225px - 75px);
+      margin-bottom: 50px; }
+    body nav.sidebar ul {
+      font-size: 12.5px;
+      line-height: 25px;
+      margin: 0;
+      padding: 0; }
+      body nav.sidebar ul li {
+        list-style: none; }
+    body nav.sidebar a, body nav.sidebar a:active, body nav.sidebar a:hover, body nav.sidebar a:visited {
+      color: white;
+      text-decoration: none;
+      border: none;
+      outline: none; }
+  body main {
+    width: 700px; }
+    body main .box {
+      min-height: 700px;
+      padding-top: 50px;
+      padding-right: 25px;
+      font-size: 12.5px;
+      line-height: 18px; }
+      body main .box .pl25 {
+        padding-left: 25px; }
+      body main .box h1 {
+        font-size: 75px;
+        line-height: 75px;
+        font-weight: 500;
+        margin: 25px 0 15px 0;
+        letter-spacing: -3px; }
+      body main .box h2 {
+        font-size: 25px;
+        line-height: 25px;
+        font-weight: 500; }
+      body main .box .box-text {
+        padding-right: 50px;
+        margin-bottom: 17.5px;
+        font-size: 12.5px;
+        line-height: 18px;
+        font-weight: 400; }
+        body main .box .box-text a, body main .box .box-text a:active, body main .box .box-text a:focus, body main .box .box-text a:visited {
+          color: white;
+          text-decoration: underline; }
+      body main .box .code {
+        width: 100%;
+        padding: 9px 18px;
+        margin-bottom: 42.5px;
+        background-color: #262626;
+        font-size: 13.5px;
+        line-height: 20px;
+        font-family: "DM Mono", monospace; }
+        body main .box .code .tab-1 {
+          margin-left: 1em; }
+        body main .box .code .tab-2 {
+          margin-left: 2em; }
+        body main .box .code .tab-3 {
+          margin-left: 3em; }
+        body main .box .code .tab-4 {
+          margin-left: 4em; }
+        body main .box .code .tab-5 {
+          margin-left: 5em; }
+        body main .box .code .highlight {
+          color: #FFD426;
+          font-weight: 500; }
+      body main .box table:not(.no-style) {
+        border-top: 3px solid #666666;
+        border-collapse: collapse; }
+        body main .box table:not(.no-style) td, body main .box table:not(.no-style) th {
+          padding: 0 25px 25px 3px;
+          vertical-align: top; }
+        body main .box table:not(.no-style) th {
+          text-align: left;
+          line-height: 20px; }
+        body main .box table:not(.no-style) td {
+          font-weight: 300; }
+        body main .box table:not(.no-style) thead tr td, body main .box table:not(.no-style) thead tr th, body main .box table:not(.no-style) tbody tr:not(:last-of-type) td, body main .box table:not(.no-style) tbody tr:not(:last-of-type) th {
+          border-bottom: 1px solid #666666; }
+    body main .box.sidebar-space {
+      padding-left: 225px;
+      z-index: 500; }
+    body main .box.bottom-spacer {
+      border-bottom: 6.25px solid #000000; }
+    body main .box.spacers-light {
+      position: relative;
+      z-index: 800;
+      background-color: #1A1A1A;
+      padding-top: 42.5px;
+      padding-left: 25px;
+      border-top: 2px solid #333333;
+      border-bottom: 2px solid #333333;
+      box-shadow: 0px 0px 50px 10px #1A1A1A; }
+    body main #top h1.main-title {
+      width: min-intrinsic;
+      width: -webkit-min-content;
+      width: -moz-min-content;
+      width: min-content;
+      display: table-caption;
+      display: -ms-grid;
+      -ms-grid-columns: min-content; }
+    body main #try .liveTest-container {
+      margin-top: 50px; }
+      body main #try .liveTest-container .liveTest-input {
+        position: relative; }
+        body main #try .liveTest-container .liveTest-input input {
+          height: 37.5px;
+          width: 100%;
+          padding: 9px;
+          background-color: #262626;
+          color: white;
+          font-size: 15px;
+          line-height: 15px;
+          border: none;
+          border-bottom: 1px solid #666666; }
+        body main #try .liveTest-container .liveTest-input button {
+          position: absolute;
+          right: 0;
+          height: calc(100% - 1px);
+          padding: 0 18px;
+          background-color: #262626;
+          color: white;
+          font-size: 15px;
+          line-height: 15px;
+          font-weight: 700;
+          border: none; }
+      body main #try .liveTest-container .liveTest-result {
+        margin-top: 50px; }
+        body main #try .liveTest-container .liveTest-result .card {
+          background-color: #262626;
+          padding: 25px;
+          display: flex;
+          position: relative;
+          font-family: "DM Mono", monospace; }
+          body main #try .liveTest-container .liveTest-result .card.hidden {
+            display: none; }
+          body main #try .liveTest-container .liveTest-result .card .card-image {
+            width: 100px;
+            height: 100%;
+            min-height: 100px;
+            margin-right: 25px; }
+            body main #try .liveTest-container .liveTest-result .card .card-image img {
+              max-width: 100px;
+              max-height: 100px;
+              margin: auto 0; }
+          body main #try .liveTest-container .liveTest-result .card .card-content .card-title {
+            font-size: 25px;
+            line-height: 33.33px;
+            font-weight: 500; }
+          body main #try .liveTest-container .liveTest-result .card .card-content .card-description {
+            font-size: 14px;
+            line-height: 18px;
+            margin-bottom: 5px; }
+          body main #try .liveTest-container .liveTest-result .card .card-content .card-site {
+            font-size: 11.5px; }
+          body main #try .liveTest-container .liveTest-result .card .card-service {
+            position: absolute;
+            right: 3px;
+            bottom: 3px;
+            color: rgba(255, 255, 255, 0.15); }
+    body main #params {
+      min-height: inherit; }
+      body main #params h1:before {
+        content: "/";
+        position: absolute;
+        margin-top: 75px;
+        margin-left: -25px; }
+      body main #params h2 {
+        margin-bottom: 77.5px; }
+    body main #paramsExamples .tab-selector {
+      display: flex; }
+      body main #paramsExamples .tab-selector input {
+        display: none; }
+      body main #paramsExamples .tab-selector label {
+        margin: 0;
+        padding: 0 25px 0 0;
+        font-size: 25px;
+        line-height: 25px;
+        font-weight: 500;
+        color: #4D4D4D; }
+      body main #paramsExamples .tab-selector input:checked + label {
+        color: white; }
+    body main #paramsExamples .tab-current, body main #paramsExamples .tabs-container {
+      padding: 25px 0; }
+    body main #paramsExamples .tabs-container {
+      display: none; }
+    body main #language div.languages-text-effect {
+      position: absolute;
+      margin: 0;
+      margin-top: -90px;
+      font-size: 75px;
+      line-height: 75px;
+      letter-spacing: -3px;
+      pointer-events: none; }
+      body main #language div.languages-text-effect div {
+        opacity: 0; }
+      body main #language div.languages-text-effect span {
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: rgba(255, 255, 255, 0.1); }
+    body main #errors .box-text {
+      margin-bottom: 50px; }

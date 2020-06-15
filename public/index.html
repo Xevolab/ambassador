@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="theme-color" content="#000000">
+
+  <title>Xevo Ambassador</title>
+
+  <link rel="stylesheet" href="/css/master.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="view">
+
+    <div class="top-blind"></div>
+
+    <div class="container">
+
+      <nav class="sidebar">
+        <a href="/"><div class="image-container"><img src="/img/logo.svg" alt="Ambassador logo"></div></a>
+        <ul>
+          <a href="#try">
+            <li scrollToElm="try">Try ambassaddor</li>
+          </a>
+          <a href="#params">
+            <li scrollToElm="params">Parameters</li>
+          </a>
+          <a href="#language">
+            <li scrollToElm="language">Select language</li>
+          </a>
+          <a href="#errors">
+            <li scrollToElm="errors">Errors</li>
+          </a>
+        </ul>
+      </nav>
+
+      <main>
+
+        <div class="box sidebar-space bottom-spacer" id="top">
+          <div class="pl25">
+            What is ambassador?
+            <h1 class="main-title">Unlock the power of a single <u>link</u></h1>
+          </div>
+        </div>
+
+        <div class="box sidebar-space bottom-spacer scroll-to-section" id="try">
+          <div class="pl25">
+            Live test
+            <h1>Take a look</h1>
+          </div>
+
+          <div class="liveTest-container">
+            <form id="liveTestForm" action="#" method="get">
+
+              <div class="liveTest-input">
+                <input type="url" name="liveTestUri" id="liveTestUri" required>
+                <button type="submit">TRY</button>
+              </div>
+
+            </form>
+            <div class="liveTest-result">
+              <div class="card hidden"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="box sidebar-space scroll-to-section" id="params">
+          <div class="pl25">
+            Try what ambassador can do with
+            <h1>Link parameters</h1>
+            <h2>Ambassador works as a wep API. To explain what data you need, you can use directly the URL of your request, addind the parameters that suit your needs.</h2>
+          </div>
+
+        </div>
+
+        <div class="box spacers-light scroll-to-section" id="paramsExamples">
+          <div class="tab-selector">
+            <input type="radio" id="params-tab-basic" value="basic" name="params-tabs" checked>
+            <label for="params-tab-basic">Basic usage</label>
+            <input type="radio" id="params-tab-card" value="card" name="params-tabs">
+            <label for="params-tab-card">Card</label>
+            <input type="radio" id="params-tab-tags" value="tags" name="params-tabs">
+            <label for="params-tab-tags">Tags</label>
+            <input type="radio" id="params-tab-schema" value="schema" name="params-tabs">
+            <label for="params-tab-schema">Schema</label>
+          </div>
+          <div class="tab-current"></div>
+          <div class="tabs-container">
+            <div class="tab" tab="basic">
+              <div class="box-text">
+                Return basic information about the provided link like redirection and mime type of the response provided.
+              </div>
+              <div class="code">curl "https://ambassador.xevolab.com/v1?u=https://nytimes.com"</div>
+              <div class="code">
+                <div class="tab-0">{</div>
+                <div class="tab-1">"okay": true,</div>
+                <div class="tab-1">"payload": {</div>
+                <div class="tab-2">"request": {</div>
+                <div class="tab-3">"uri": "https://www.nytimes.com/",</div>
+                <div class="tab-3">"source": "nytimes.com",</div>
+                <div class="tab-3">"redirected": false</div>
+                <div class="tab-2">},</div>
+                <div class="tab-2">"mime": {</div>
+                <div class="tab-3">"mime": "text/html",</div>
+                <div class="tab-3">"extension": ".html",</div>
+                <div class="tab-3">"type": "html"</div>
+                <div class="tab-2">}</div>
+                <div class="tab-1">},</div>
+                <div class="tab-1">"service": "5ms",</div>
+                <div class="tab-1">"cached": {</div>
+                <div class="tab-2">"cached": true,</div>
+                <div class="tab-2">"cachedAt": 1591220758157</div>
+                <div class="tab-1">}</div>
+                <div class="tab-0">}</div>
+              </div>
+            </div>
+            <div class="tab" tab="card">
+              <div class="box-text">
+                Provides an additional card field from which you can create card previews of the site.
+              </div>
+              <div class="code">curl "https://ambassador.xevolab.com/v1?u=https://nytimes.com&<span class="highlight">card</span>"</div>
+              <div class="code">
+                <div class="tab-0">{</div>
+                <div class="tab-1">"okay": true,</div>
+                <div class="tab-1">"payload": {</div>
+                <div class="tab-2">"request": {</div>
+                <div class="tab-3">"uri": "https: //www.nytimes.com/",</div>
+                <div class="tab-3">"source": "nytimes.com",</div>
+                <div class="tab-3">"redirected": false</div>
+                <div class="tab-2">},</div>
+                <div class="tab-2">"mime": {</div>
+                <div class="tab-3">"mime": "text/html",</div>
+                <div class="tab-3">"extension": ".html",</div>
+                <div class="tab-3">"type": "html"</div>
+                <div class="tab-2">},</div>
+                <div class="tab-2">"card": {</div>
+                <div class="tab-3">"title": "Breaking News, World News & Multimedia",</div>
+                <div class="tab-3">"descr": "The New York Times:  Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",</div>
+                <div class="tab-3">"source": "nytimes.com",</div>
+                <div class="tab-3">"img": "https: //static01.nyt.com/newsgraphics/images/icons/defaultPromoCrop.png",</div>
+                <div class="tab-3">"img_alt": null</div>
+                <div class="tab-2">}</div>
+                <div class="tab-1">},</div>
+                <div class="tab-1">"service": "806ms",</div>
+                <div class="tab-1">"cached": {</div>
+                <div class="tab-2">"cached": false</div>
+                <div class="tab-1">}</div>
+                <div class="tab-0">}</div>
+              </div>
+            </div>
+            <div class="tab" tab="tags">
+              <div class="box-text">
+                Provides an additional tags field that contains a list of all the OG <a href="https://ogp.me/">Open Graph protocol</a> fields provided by the requested uri.
+              </div>
+              <div class="code">curl "https://ambassador.xevolab.com/v1?u=https://nytimes.com&<span class="highlight">tags</span>"</div>
+              <div class="code">
+                <div class="tab-0">{</div>
+                <div class="tab-1">"okay": true,</div>
+                <div class="tab-1">"payload": {</div>
+                <div class="tab-2">"request": {</div>
+                <div class="tab-3">"uri": "https://www.nytimes.com/",</div>
+                <div class="tab-3">"source": "nytimes.com",</div>
+                <div class="tab-3">"redirected": false</div>
+                <div class="tab-2">},</div>
+                <div class="tab-2">"mime": {</div>
+                <div class="tab-3">"mime": "text/html",</div>
+                <div class="tab-3">"extension": ".html",</div>
+                <div class="tab-3">"type": "html"</div>
+                <div class="tab-2">},</div>
+                <div class="tab-2">"tags": {</div>
+                <div class="tab-3">"basic": {</div>
+                <div class="tab-4">"htmltitle": "The New York Times - Breaking News, World News & Multimedia",</div>
+                <div class="tab-4">"description": "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com."</div>
+                <div class="tab-3">},</div>
+                <div class="tab-3">"ogBasic": {</div>
+                <div class="tab-4">"og:title": "Breaking News, World News & Multimedia",</div>
+                <div class="tab-4">"og:type": "website",</div>
+                <div class="tab-4">"og:url": "https://www.nytimes.com",</div>
+                <div class="tab-4">"og:description": "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com."</div>
+                <div class="tab-3">},</div>
+                <div class="tab-3">"ogImage": {</div>
+                <div class="tab-4">"og:image": "https://static01.nyt.com/newsgraphics/images/icons/defaultPromoCrop.png"</div>
+                <div class="tab-3">}</div>
+                <div class="tab-2">}</div>
+                <div class="tab-1">},</div>
+                <div class="tab-1">"service": "802ms",</div>
+                <div class="tab-2">"cache": {</div>
+                <div class="tab-2">"cached": false</div>
+                <div class="tab-1">}</div>
+                <div class="tab-0">}</div>
+              </div>
+            </div>
+            <div class="tab" tab="schema">
+              <div class="box-text">
+                Provides an additional schema field that contains a parsed version of the Linked data provided by the requested uri. Currently we support the <a href="https://json-ld.org/">JSON-LD</a> format.
+              </div>
+              <div class="code">curl "https://ambassador.xevolab.com/v1?u=https://nytimes.com&<span class="highlight">schema</span>"</div>
+              <div class="code">
+                <div class="tab-0">{</div>
+                <div class="tab-1">"okay": true,</div>
+                <div class="tab-1">"payload": {</div>
+                <div class="tab-2">"request": {</div>
+                <div class="tab-3">"uri": "https://www.nytimes.com/",</div>
+                <div class="tab-3">"source": "nytimes.com",</div>
+                <div class="tab-3">"redirected": false</div>
+                <div class="tab-2">},</div>
+                <div class="tab-2">"mime": {</div>
+                <div class="tab-3">"mime": "text/html",</div>
+                <div class="tab-3">"extension": ".html",</div>
+                <div class="tab-3">"type": "html"</div>
+                <div class="tab-2">},</div>
+                <div class="tab-2">"schema": {</div>
+                <div class="tab-3">"@context": "http://schema.org",</div>
+                <div class="tab-3">"@type": "WebPage",</div>
+                <div class="tab-3">"image": [</div>
+                <div class="tab-4">{</div>
+                <div class="tab-5">"@context": "http://schema.org",</div>
+                <div class="tab-5">"@type": "ImageObject",</div>
+                <div class="tab-5">"url": "https://static01.nyt.com/vi-assets/images/share/1200x675_nameplate.png",</div>
+                <div class="tab-5">"height": 675,</div>
+                <div class="tab-5">"width": 1200</div>
+                <div class="tab-4">},</div>
+                <div class="tab-4">{</div>
+                <div class="tab-5">"@context": "http://schema.org",</div>
+                <div class="tab-5">"@type": "ImageObject",</div>
+                <div class="tab-5">"url": "https://static01.nyt.com/vi-assets/images/share/1200x900_t.png",</div>
+                <div class="tab-5">"height": 900,</div>
+                <div class="tab-5">"width": 1200</div>
+                <div class="tab-4">},</div>
+                <div class="tab-4">{</div>
+                <div class="tab-5">"@context": "http://schema.org",</div>
+                <div class="tab-5">"@type": "ImageObject",</div>
+                <div class="tab-5">"url": "https://static01.nyt.com/vi-assets/images/share/1200x1200_t.png",</div>
+                <div class="tab-5">"height": 1200,</div>
+                <div class="tab-5">"width": 1200</div>
+                <div class="tab-4">}</div>
+                <div class="tab-3">],</div>
+                <div class="tab-3">"name": "The New York Times",</div>
+                <div class="tab-3">"mainEntity": {...}</div>
+                <div class="tab-3">"publisher": {</div>
+                <div class="tab-4">"@id": "https://www.nytimes.com/#publisher"</div>
+                <div class="tab-3">}</div>
+                <div class="tab-2">}</div>
+                <div class="tab-1">},</div>
+                <div class="tab-1">"service": "658ms",</div>
+                <div class="tab-1">"cache": {</div>
+                <div class="tab-2">"cached": false</div>
+                <div class="tab-1">}</div>
+                <div class="tab-0">}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="box sidebar-space bottom-spacer scroll-to-section" id="language">
+          To be precise
+          <h1>Select language</h1>
+          <div class="languages-text-effect">
+            <div>language</div>
+            <span>Langue</span>
+            <span>язык</span>
+            <span>Γλώσσα</span>
+            <span>언어</span>
+            <span>Lingua</span>
+            <span>言語</span>
+            <span>Idioma</span>
+          </div>
+          <h2>You can also specify a language for Ambassador to request to the uri, as the website may return different results for different languages.</h2>
+          <div class="code">curl "http://ambassador.xevolab.com/v1?u=https://www.nytimes.com/&<span class="highlight">language=es</span>"</div>
+        </div>
+
+        <div class="box sidebar-space bottom-spacer scroll-to-section" id="errors">
+          In case of
+          <h1>ErRor meSs4gEs</h1>
+          <h2>In case of an error Ambassador will still return a successful 200 reponse towards clients. Errors include an error code and if Ambassador thinks this request can be retried for a different result.</h2>
+          <div class="box-text">In rare cases, it may encounter a tragic error, from which it is not able to recover.</div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Error code</th>
+                <th>Error name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>INV_STS_CODE</th>
+                <td>Invalid Status Code</td>
+                <td>The status code returned by the requested uri is not in the 2xx range</td>
+              </tr>
+              <tr>
+                <th>RES_UNRESP</th>
+                <td>Resource Unresponsive</td>
+                <td>The uri is unresponsive</td>
+              </tr>
+              <tr>
+                <th>RES_EMPTY</th>
+                <td>Response Empty</td>
+                <td>The response from the uri seems empty</td>
+              </tr>
+              <tr>
+                <th>INV_URL</th>
+                <td>Invalid URL</td>
+                <td>The provided URL seems invalid</td>
+              </tr>
+              <tr>
+                <th>GEN_ERROR</th>
+                <td>Generic Error</td>
+                <td>Generic Error</td>
+              </tr>
+              <tr>
+                <th>GEN_DOM_ERROR</th>
+                <td>Generic DOM Error</td>
+                <td>Generic error while analyzing the DOM, generally caused by a syntax error in the DOM itself</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+        <div class="box sidebar-space" id="ziset">
+          <table class="no-style">
+            <tr>
+              <td>E qua che ci mettiamo?</td>
+              <td>Domanda interessante</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>La risposta potrebbe esserlo altrettanto</td>
+            </tr>
+            <tr>
+              <td>Che fosse interessante non avevo di certo il dubbio.</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Perché l'hai fatta tu dici?</td>
+            </tr>
+            <tr>
+              <td>Certo è un buon argomento a sostegno...</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Ma non è l'unico.. giusto?</td>
+            </tr>
+            <tr>
+              <td>Esatto, non è l'unico</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>E quale altro argomento hai a sostegno della tua tesi?</td>
+            </tr>
+            <tr>
+              <td>Domanda interessante</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>La risposta potrebbe esserlo altrettanto</td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+
+      </main>
+
+    </div>
+
+    <div class="bottom-blind"></div>
+
+  </div>
+
+  <script type="text/javascript">
+    exampleUrls = ["https://www.spacex.com", "https://www.wh.gov", "https://nytimes.com", "https://www.reddit.com", "https://apple.com", "https://businessinsider.com", "https://www.spotify.com"]
+    document.getElementById("liveTestUri").value = exampleUrls[Math.floor(Math.random()*exampleUrls.length)]
+
+    document.getElementById("liveTestForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      var xhr = new XMLHttpRequest();
+    	xhr.onload = function () {
+    		if (xhr.readyState == 4 && xhr.status == 200) {
+
+          let cardEl = document.querySelector(`.liveTest-result .card`);
+
+    			try {
+    				cardDt = JSON.parse(xhr.response);
+    			} catch (e) {
+            cardEl.innerHTML = `<div class="card-content">
+              <div class="card-title">Something went wrong</div>
+              <div class="card-site">sorry</div>
+            </div>`;
+
+      			cardEl.classList.remove("hidden")
+            return;
+    			}
+
+          console.log(cardDt);
+    			if (!cardDt.okay || cardDt.payload.card === null) {
+            cardEl.innerHTML = `<div class="card-content">
+              <div class="card-title">Something went wrong</div>
+              <div class="card-site">sorry</div>
+            </div>`;
+
+      			cardEl.classList.remove("hidden")
+            return;
+          };
+
+          service = cardDt.service;
+          cardDt = cardDt.payload.card;
+          cardEl.innerHTML = `
+          ${ cardDt.img !== null ?
+            `<div class="card-image"><img src="${cardDt.img}" alt=${cardDt.img_alt}></div>` : ""
+          }
+          <div class="card-content">
+            <div class="card-title">${cardDt.title}</div>
+            ${ cardDt.descr !== null ?
+              `<div class="card-description">${cardDt.descr.substr(0, 150).split(" ").slice(0, -1).join(" ")}</div>` : ""
+            }
+            <div class="card-site">${cardDt.source}</div>
+          </div><div class="card-service">${service}</div>`;
+
+    			cardEl.classList.remove("hidden")
+    		}
+    		else {
+    			console.error("Whoopies daisy");
+    			return false;
+    		}
+    	}
+    	xhr.onerror = function () {
+    		console.error("Whoopies");
+    		return false;
+    	}
+    	xhr.open('GET', "http://ambassador.xevolab.com/v1/"+encodeURIComponent(document.getElementById("liveTestUri").value)+"?card&"+(""+Math.floor(Math.random()*10000)));
+
+    	xhr.send();
+    })
+  </script>
+
+  <script type="text/javascript">
+    var links = document.querySelectorAll("nav.sidebar a")
+    for (var u of links) {
+      u.addEventListener("click", function(e) {
+        if (e.target.attributes.scrollToElm === undefined)
+          return
+
+        e.preventDefault();
+
+        const scrollToElm = document.querySelector('#'+e.target.attributes.scrollToElm.value)
+        const elmDim = scrollToElm.getBoundingClientRect() // get rects(width, height, top, etc)
+        const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+        let scrolly = document.documentElement.scrollTop + elmDim.top - (viewHeight - 700)/2;
+
+        window.scroll({
+          top: scrolly,
+          behavior: 'smooth' // smooth scroll
+        });
+      })
+    }
+  </script>
+
+  <script type="text/javascript">
+    const tabsBtns = document.querySelectorAll("#paramsExamples .tab-selector input");
+    function switchTab(t) {
+      let newTab = document.querySelector("#paramsExamples .tabs-container .tab[tab=\""+t+"\"]").innerHTML;
+      document.querySelector("#paramsExamples .tab-current").innerHTML = newTab;
+    }
+    for (var i = 0; i < tabsBtns.length; i++)
+      tabsBtns[i].addEventListener("change", function(e) { switchTab(e.target.value); })
+
+    switchTab(document.querySelector("#paramsExamples .tab-selector input:checked").value)
+  </script>
+
+</body>
+</html>
