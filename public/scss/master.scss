@@ -1,0 +1,379 @@
+// @Author: francesco
+// @Date:   2020-06-04T22:52:07+02:00
+// @Last modified by:   francesco
+// @Last modified time: 2020-06-15T11:26:10+02:00
+
+@import '_variables';
+
+$viewSize: 700px;
+$navWidth: 225px;
+
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: $bgColor;
+  overflow-x: hidden;
+
+  .view {
+    background-color: $bgColor;
+
+    .top-blind, .bottom-blind {
+      background-color: $bgColor;
+      position: fixed;
+      width: 100vw;
+      left: 0;
+      height: calc((100vh - #{$viewSize})/2);
+      z-index: 1000;
+    }
+    .top-blind {
+      top: 0;
+    }
+    .bottom-blind {
+      bottom: 0;
+    }
+  }
+
+  .container {
+    width: $viewSize;
+    min-height: $viewSize;
+    margin: auto;
+    padding: calc((100vh - #{$viewSize})/2) 0;
+
+    overflow-x: hidden;
+
+    background-color: $boxColor;
+    color: white;
+    font-family: $bodyFont, 'sans-serif';
+  }
+
+  nav.sidebar {
+    max-width: $navWidth;
+
+    padding-left: 50px;
+    padding-right: 25px;
+    padding-top: 50px;
+
+    position: fixed;
+    z-index: 700;
+
+    .image-container img {
+      width: calc(#{$navWidth} - 75px);
+      margin-bottom: 50px;
+    }
+
+    ul {
+      font-size: 12.5px;
+      line-height: 25px;
+      margin: 0;
+      padding: 0;
+      li {
+        list-style: none;
+      }
+    }
+    a, a:active, a:hover, a:visited {
+      color: white;
+      text-decoration: none;
+      border: none;
+      outline: none;
+    }
+  }
+
+  main {
+    width: $viewSize;
+
+    .box {
+      min-height: $viewSize;
+
+      padding-top: 50px;
+      .pl25 {
+        padding-left: 25px;
+      }
+      padding-right: 25px;
+
+      font-size: 12.5px;
+      line-height: 18px;
+
+      h1 {
+        font-size: 75px;
+        line-height: 75px;
+        font-weight: 500;
+        margin: 25px 0 15px 0;
+        letter-spacing: -3px;
+      }
+      h2 {
+        font-size: 25px;
+        line-height: 25px;
+        font-weight: 500;
+      }
+
+      .box-text {
+        padding-right: 50px;
+        margin-bottom: 17.5px;
+        font-size: 12.5px;
+        line-height: 18px;
+        font-weight: 400;
+
+        a, a:active, a:focus, a:visited {
+          color: white;
+          text-decoration: underline;
+        }
+      }
+
+      .code {
+        width: 100%;
+        padding: 9px 18px;
+        margin-bottom: 42.5px;
+
+        background-color: $fieldsColor;
+
+        font-size: 13.5px;
+        line-height: 20px;
+        font-family: $scriptFont, monospace;
+
+        .tab-1 {
+          margin-left: 1em;
+        }
+        .tab-2 {
+          margin-left: 2em;
+        }
+        .tab-3 {
+          margin-left: 3em;
+        }
+        .tab-4 {
+          margin-left: 4em;
+        }
+        .tab-5 {
+          margin-left: 5em;
+        }
+
+        .highlight {
+          color: $textAccent;
+          font-weight: 500;
+        }
+      }
+
+      table:not(.no-style) {
+        border-top: 3px solid $fieldsBorderColor;
+        border-collapse:collapse;
+
+        td, th {
+          padding: 0 25px 25px 3px;
+          vertical-align: top;
+        }
+        th {
+          text-align: left;
+          line-height: 20px;
+        }
+        td {
+          font-weight: 300;
+        }
+
+        thead tr, tbody tr:not(:last-of-type) {
+          td, th {
+            border-bottom: 1px solid $fieldsBorderColor;
+          }
+        }
+
+      }
+
+    }
+    .box.sidebar-space {
+      padding-left: $navWidth;
+      z-index: 500;
+    }
+    .box.bottom-spacer {
+      border-bottom: 6.25px solid $hrColor;
+    }
+    .box.spacers-light {
+      position: relative;
+      z-index: 800;
+      background-color: $boxColor;
+
+      padding-top: 42.5px;
+      padding-left: 25px;
+
+      border-top: 2px solid #333333;
+      border-bottom: 2px solid #333333;
+
+      box-shadow: 0px 0px 50px 10px $boxColor;
+    }
+
+    #top {
+      h1.main-title {
+        width: min-intrinsic;
+        width: -webkit-min-content;
+        width: -moz-min-content;
+        width: min-content;
+        display: table-caption;
+        display: -ms-grid;
+        -ms-grid-columns: min-content;
+      }
+    }
+
+    #try {
+      .liveTest-container {
+        margin-top: 50px;
+
+        .liveTest-input {
+          position: relative;
+
+          input {
+            height: 37.5px;
+            width: 100%;
+            padding: 9px;
+
+            background-color: $fieldsColor;
+            color: white;
+            font-size: 15px;
+            line-height: 15px;
+
+            border: none;
+            border-bottom: 1px solid $fieldsBorderColor;
+          }
+          button {
+            position: absolute;
+            right: 0;
+            height: calc(100% - 1px);
+            padding: 0 18px;
+
+            background-color: $fieldsColor;
+            color: white;
+            font-size: 15px;
+            line-height: 15px;
+            font-weight: 700;
+
+            border: none;
+          }
+        }
+
+        .liveTest-result {
+          margin-top: 50px;
+
+          .card {
+            background-color: $fieldsColor;
+            padding: 25px;
+            display: flex;
+            position: relative;
+
+            font-family: $scriptFont, monospace;
+
+            &.hidden {
+              display: none;
+            }
+
+            .card-image {
+              width: 100px;
+              height: 100%;
+              min-height: 100px;
+              margin-right: 25px;
+
+              img {
+                max-width: 100px;
+                max-height: 100px;
+                margin: auto 0;
+              }
+            }
+            .card-content {
+              .card-title {
+                font-size: 25px;
+                line-height: 33.33px;
+                font-weight: 500;
+              }
+              .card-description {
+                font-size: 14px;
+                line-height: 18px;
+                margin-bottom: 5px;
+              }
+              .card-site {
+                font-size: 11.5px;
+              }
+            }
+            .card-service {
+              position: absolute;
+              right: 3px;
+              bottom: 3px;
+              color: rgba(white, 0.15);
+            }
+          }
+        }
+      }
+    }
+
+    #params {
+      min-height: inherit;
+      h1:before {
+        content: "/";
+        position: absolute;
+        margin-top: 75px;
+        margin-left: -25px;
+      }
+      h2 {
+        margin-bottom: 77.5px;
+      }
+    }
+
+    #paramsExamples {
+      .tab-selector {
+        display: flex;
+        input {
+          display: none;
+        }
+        label {
+          margin: 0;
+          padding: 0 25px 0 0;
+
+          font-size: 25px;
+          line-height: 25px;
+          font-weight: 500;
+
+          color: $textInactiveColor;
+        }
+        input:checked+label {
+      		color: $textColor;
+      	}
+      }
+      .tab-current, .tabs-container {
+        padding: 25px 0;
+      }
+      .tabs-container {
+        display: none;
+      }
+    }
+
+    #language {
+      div.languages-text-effect {
+        position: absolute;
+        margin: 0;
+        margin-top: -90px;
+
+        font-size: 75px;
+        line-height: 75px;
+        letter-spacing: -3px;
+        pointer-events: none;
+
+        div {
+          opacity: 0;
+        }
+
+        span {
+          position: absolute;
+          left: 0;
+          top: 0;
+          color: rgba($textColor, 0.1);
+        }
+      }
+    }
+
+    #errors {
+      .box-text {
+        margin-bottom: 50px;
+      }
+    }
+
+  }
+}
