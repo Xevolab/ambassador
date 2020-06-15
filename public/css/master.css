@@ -83,11 +83,13 @@ body {
       body main .box .code {
         width: 100%;
         padding: 9px 18px;
-        margin-bottom: 42.5px;
+        margin-bottom: 25px;
         background-color: #262626;
         font-size: 13.5px;
         line-height: 20px;
         font-family: "DM Mono", monospace; }
+        body main .box .code div {
+          line-break: normal; }
         body main .box .code .tab-1 {
           margin-left: 1em; }
         body main .box .code .tab-2 {
@@ -114,6 +116,10 @@ body {
           font-weight: 300; }
         body main .box table:not(.no-style) thead tr td, body main .box table:not(.no-style) thead tr th, body main .box table:not(.no-style) tbody tr:not(:last-of-type) td, body main .box table:not(.no-style) tbody tr:not(:last-of-type) th {
           border-bottom: 1px solid #666666; }
+        body main .box table:not(.no-style) tbody tr th:after {
+          height: 35px;
+          content: ' ';
+          display: block; }
     body main .box.sidebar-space {
       padding-left: 225px;
       z-index: 500; }
@@ -126,7 +132,6 @@ body {
       padding-top: 42.5px;
       padding-left: 25px;
       border-top: 2px solid #333333;
-      border-bottom: 2px solid #333333;
       box-shadow: 0px 0px 50px 10px #1A1A1A; }
     body main #top h1.main-title {
       width: min-intrinsic;
@@ -175,11 +180,11 @@ body {
             width: 100px;
             height: 100%;
             min-height: 100px;
-            margin-right: 25px; }
-            body main #try .liveTest-container .liveTest-result .card .card-image img {
-              max-width: 100px;
-              max-height: 100px;
-              margin: auto 0; }
+            min-width: 100px;
+            margin-right: 25px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center; }
           body main #try .liveTest-container .liveTest-result .card .card-content .card-title {
             font-size: 25px;
             line-height: 33.33px;

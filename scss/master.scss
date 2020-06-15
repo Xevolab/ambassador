@@ -1,7 +1,7 @@
 // @Author: francesco
 // @Date:   2020-06-04T22:52:07+02:00
 // @Last modified by:   francesco
-// @Last modified time: 2020-06-15T11:54:46+02:00
+// @Last modified time: 2020-06-15T22:32:29+02:00
 
 @import '_variables';
 
@@ -127,7 +127,7 @@ body {
       .code {
         width: 100%;
         padding: 9px 18px;
-        margin-bottom: 42.5px;
+        margin-bottom: 25px;
 
         background-color: $fieldsColor;
 
@@ -135,6 +135,9 @@ body {
         line-height: 20px;
         font-family: $scriptFont, monospace;
 
+        div {
+          line-break: normal;
+        }
         .tab-1 {
           margin-left: 1em;
         }
@@ -179,6 +182,14 @@ body {
           }
         }
 
+        tbody tr {
+          th:after {
+            height: 35px;
+            content: ' ';
+            display: block;
+          }
+        }
+
       }
 
     }
@@ -198,7 +209,6 @@ body {
       padding-left: 25px;
 
       border-top: 2px solid #333333;
-      border-bottom: 2px solid #333333;
 
       box-shadow: 0px 0px 50px 10px $boxColor;
     }
@@ -270,13 +280,12 @@ body {
               width: 100px;
               height: 100%;
               min-height: 100px;
+              min-width: 100px;
               margin-right: 25px;
 
-              img {
-                max-width: 100px;
-                max-height: 100px;
-                margin: auto 0;
-              }
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-position: center;
             }
             .card-content {
               .card-title {

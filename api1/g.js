@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-05-22T21:14:46+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-05-22T22:11:25+02:00
+ * @Last modified time: 2020-06-15T17:56:16+02:00
  */
 
 /*
@@ -74,7 +74,7 @@ router.get(["/", "/:u"], (req, res) => {
 
   var u = req.query.u || req.params.u;
 
-  if (!RegExp(/^((?:https?:\/\/)?[^./]+(?:\.[^./]+)+(?:\/.*)?)$/gi).test(u))
+  if (!RegExp(/^((?:https?:\/\/)[^./]+(?:\.[^./]+)+(?:\/.*)?)$/gi).test(u))
 		return res.status(400).json({okay: false, error: {errorCode: 'INV_URL', retryable: false}})
 
   // Parse query string
@@ -88,7 +88,8 @@ router.get(["/", "/:u"], (req, res) => {
   if (req.query.language != null || req.query.lang != null)
     params.lang = (req.query.language) || (req.query.lang);
   else {
-    reqLanguage = (req.headers["accept-language"].split(",")[0].substr(0,2)) || null;
+    if (req.headers["accept-language"] !== undefined)
+      reqLanguage = (req.headers["accept-language"].split(",")[0].substr(0,2)) || null;
 
     params.lang = (reqLanguage != null ? reqLanguage : "en");
   }
