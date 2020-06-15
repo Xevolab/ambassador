@@ -30,6 +30,7 @@
   <meta name="twitter:image" content="http://ambassador.xevolab.com/img/logo_512.png">
 
   <title>Ambassador</title>
+  <meta name="description" content="Unlock the power of a single link">
 
   <link rel="stylesheet" href="/css/master.css">
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -79,13 +80,20 @@
             <form id="liveTestForm" action="#" method="get">
 
               <div class="liveTest-input">
-                <input type="url" name="liveTestUri" id="liveTestUri" required>
+                <input type="url" name="liveTestUri" id="liveTestUri" placeholder="https://" required>
                 <button type="submit">TRY</button>
               </div>
 
             </form>
             <div class="liveTest-result">
-              <div class="card hidden"></div>
+              <div class="card">
+                <div class="card-image" style="background-image: url('http://ambassador.xevolab.com/img/logo_512.png')"></div>
+                <div class="card-content">
+                  <div class="card-title">Ambassador</div>
+
+                  <div class="card-site">xevolab.com</div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -95,12 +103,12 @@
           <div class="pl25">
             Try what ambassador can do with
             <h1>Link parameters</h1>
-            <h2>Ambassador works as a wep API. To explain what data you need, you can use directly the URL of your request, addind the parameters that suit your needs.</h2>
+            <h2>Ambassador is a REST API. To explain what data you need, you can use directly the URL of your request, addind the parameters that suit your needs.</h2>
           </div>
 
         </div>
 
-        <div class="box spacers-light scroll-to-section" id="paramsExamples">
+        <div class="box spacers-light bottom-spacer scroll-to-section" id="paramsExamples">
           <div class="tab-selector">
             <input type="radio" id="params-tab-basic" value="basic" name="params-tabs" checked>
             <label for="params-tab-basic">Basic usage</label>
@@ -115,9 +123,9 @@
           <div class="tabs-container">
             <div class="tab" tab="basic">
               <div class="box-text">
-                Return basic information about the provided link like redirection and mime type of the response provided.
+                Return basic information about the provided link. The results include eventual redirections and mime type of the response provided.
               </div>
-              <div class="code">curl "https://ambassador.xevolab.com/v1?u=https://nytimes.com"</div>
+              <div class="code">curl "http://ambassador.xevolab.com/v1?u=https://nytimes.com"</div>
               <div class="code">
                 <div class="tab-0">{</div>
                 <div class="tab-1">"okay": true,</div>
@@ -143,15 +151,15 @@
             </div>
             <div class="tab" tab="card">
               <div class="box-text">
-                Provides an additional card field from which you can create card previews of the site.
+                The page is analized to create a card field containing the title, description and an image for the web page. The unprocessed data can be accessed via the tags parameter.
               </div>
-              <div class="code">curl "https://ambassador.xevolab.com/v1?u=https://nytimes.com&<span class="highlight">card</span>"</div>
+              <div class="code">curl "http://ambassador.xevolab.com/v1?u=https://nytimes.com&<span class="highlight">card</span>"</div>
               <div class="code">
                 <div class="tab-0">{</div>
                 <div class="tab-1">"okay": true,</div>
                 <div class="tab-1">"payload": {</div>
                 <div class="tab-2">"request": {</div>
-                <div class="tab-3">"uri": "https: //www.nytimes.com/",</div>
+                <div class="tab-3">"uri": "https://www.nytimes.com/",</div>
                 <div class="tab-3">"source": "nytimes.com",</div>
                 <div class="tab-3">"redirected": false</div>
                 <div class="tab-2">},</div>
@@ -164,7 +172,7 @@
                 <div class="tab-3">"title": "Breaking News, World News & Multimedia",</div>
                 <div class="tab-3">"descr": "The New York Times:  Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",</div>
                 <div class="tab-3">"source": "nytimes.com",</div>
-                <div class="tab-3">"img": "https: //static01.nyt.com/newsgraphics/images/icons/defaultPromoCrop.png",</div>
+                <div class="tab-3">"img": "https://static01.nyt.com/newsgraphics/images/icons/defaultPromoCrop.png",</div>
                 <div class="tab-3">"img_alt": null</div>
                 <div class="tab-2">}</div>
                 <div class="tab-1">},</div>
@@ -179,7 +187,7 @@
               <div class="box-text">
                 Provides an additional tags field that contains a list of all the OG <a href="https://ogp.me/">Open Graph protocol</a> fields provided by the requested uri.
               </div>
-              <div class="code">curl "https://ambassador.xevolab.com/v1?u=https://nytimes.com&<span class="highlight">tags</span>"</div>
+              <div class="code">curl "http://ambassador.xevolab.com/v1?u=https://nytimes.com&<span class="highlight">tags</span>"</div>
               <div class="code">
                 <div class="tab-0">{</div>
                 <div class="tab-1">"okay": true,</div>
@@ -221,7 +229,7 @@
               <div class="box-text">
                 Provides an additional schema field that contains a parsed version of the Linked data provided by the requested uri. Currently we support the <a href="https://json-ld.org/">JSON-LD</a> format.
               </div>
-              <div class="code">curl "https://ambassador.xevolab.com/v1?u=https://nytimes.com&<span class="highlight">schema</span>"</div>
+              <div class="code">curl "http://ambassador.xevolab.com/v1?u=https://nytimes.com&<span class="highlight">schema</span>"</div>
               <div class="code">
                 <div class="tab-0">{</div>
                 <div class="tab-1">"okay": true,</div>
@@ -339,7 +347,7 @@
               <tr>
                 <th>GEN_DOM_ERROR</th>
                 <td>Generic DOM Error</td>
-                <td>Generic error while analyzing the DOM, generally caused by a syntax error in the DOM itself</td>
+                <td>Generic error while analyzing the DOM, could be caused by a syntax error in the DOM itself</td>
               </tr>
             </tbody>
           </table>
@@ -361,16 +369,10 @@
   </div>
 
   <script type="text/javascript">
-    exampleUrls = ["https://www.spacex.com", "https://www.wh.gov", "https://nytimes.com", "https://www.reddit.com", "https://apple.com", "https://businessinsider.com", "https://www.spotify.com"]
-    document.getElementById("liveTestUri").value = exampleUrls[Math.floor(Math.random()*exampleUrls.length)]
-
-    document.getElementById("liveTestForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
+    function createCard(path) {
       var xhr = new XMLHttpRequest();
     	xhr.onload = function () {
     		if (xhr.readyState == 4 && xhr.status == 200) {
-
           let cardEl = document.querySelector(`.liveTest-result .card`);
 
     			try {
@@ -385,7 +387,6 @@
             return;
     			}
 
-          console.log(cardDt);
     			if (!cardDt.okay || cardDt.payload.card === null) {
             cardEl.innerHTML = `<div class="card-content">
               <div class="card-title">Something went wrong</div>
@@ -400,10 +401,10 @@
           cardDt = cardDt.payload.card;
           cardEl.innerHTML = `
           ${ cardDt.img !== null ?
-            `<div class="card-image"><img src="${cardDt.img}" alt=${cardDt.img_alt}></div>` : ""
+            `<div class="card-image" style="background-image: url('${cardDt.img}')"></div>` : ""
           }
           <div class="card-content">
-            <div class="card-title">${cardDt.title}</div>
+            <div class="card-title">${cardDt.title.split(/[\:\|\-\–\!]+/)[0]}</div>
             ${ cardDt.descr !== null ?
               `<div class="card-description">${cardDt.descr.substr(0, 150).split(" ").slice(0, -1).join(" ")}</div>` : ""
             }
@@ -421,33 +422,22 @@
     		console.error("Whoopies");
     		return false;
     	}
-    	xhr.open('GET', "http://ambassador.xevolab.com/v1/"+encodeURIComponent(document.getElementById("liveTestUri").value)+"?card&"+(""+Math.floor(Math.random()*10000)));
+    	xhr.open('GET', "/v1/"+encodeURIComponent(path)+"?card&"+(""+Math.floor(Math.random()*10000)));
 
     	xhr.send();
+    }
+
+    document.getElementById("liveTestForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      createCard(document.getElementById("liveTestUri").value);
     })
+    createCard("http://ambassador.xevolab.com");
   </script>
 
+  <script src="/js/zenscroll-min.js" charset="utf-8"></script>
   <script type="text/javascript">
-    var links = document.querySelectorAll("nav.sidebar a")
-    for (var u of links) {
-      u.addEventListener("click", function(e) {
-        if (e.target.attributes.scrollToElm === undefined)
-          return
-
-        e.preventDefault();
-
-        const scrollToElm = document.querySelector('#'+e.target.attributes.scrollToElm.value)
-        const elmDim = scrollToElm.getBoundingClientRect() // get rects(width, height, top, etc)
-        const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-
-        let scrolly = document.documentElement.scrollTop + elmDim.top - (viewHeight - 700)/2;
-
-        window.scroll({
-          top: scrolly,
-          behavior: 'smooth' // smooth scroll
-        });
-      })
-    }
+    zenscroll.setup(450, (Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 700)/2)
   </script>
 
   <script type="text/javascript">

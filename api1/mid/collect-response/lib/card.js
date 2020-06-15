@@ -1,3 +1,11 @@
+/**
+ * @Author: francesco
+ * @Date:   2020-06-15T22:14:31+02:00
+ * @Last modified by:   francesco
+ * @Last modified time: 2020-06-15T22:17:13+02:00
+ */
+
+
 module.exports = (d) => {
 
   var cardData = {};
@@ -17,6 +25,10 @@ module.exports = (d) => {
           img: ((d.tags.ogImage == null ? null : d.tags.ogImage["og:image"]) || d.tags.basic.image || null),
           img_alt: ((d.tags.ogImage == null ? null : d.tags.ogImage["og:image:alt"]) || null)
         }
+
+        if (!RegExp(/^((?:https?:\/\/)[^./]+(?:\.[^./]+)+(?:\/.*)?)$/gi).test(cardData.img))
+          cardData.img = null;
+
         break;
       case 'image':
         cardData = {
