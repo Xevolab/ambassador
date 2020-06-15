@@ -1,7 +1,7 @@
 // @Author: francesco
 // @Date:   2020-06-04T22:52:07+02:00
 // @Last modified by:   francesco
-// @Last modified time: 2020-06-15T11:26:10+02:00
+// @Last modified time: 2020-06-15T11:54:46+02:00
 
 @import '_variables';
 
@@ -375,5 +375,20 @@ body {
       }
     }
 
+  }
+
+  footer {
+    padding: 75px 25px 25px 25px;
+
+    font-size: 10px;
+    line-height: 12.5px;
+    color: #666666;
+    text-align: right;
+
+    div.disclaimer {
+      margin-left: auto;
+      margin-top: 5px;
+      max-width: 350px;
+    }
   }
 }

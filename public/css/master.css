@@ -238,3 +238,13 @@ body {
         color: rgba(255, 255, 255, 0.1); }
     body main #errors .box-text {
       margin-bottom: 50px; }
+  body footer {
+    padding: 75px 25px 25px 25px;
+    font-size: 10px;
+    line-height: 12.5px;
+    color: #666666;
+    text-align: right; }
+    body footer div.disclaimer {
+      margin-left: auto;
+      margin-top: 5px;
+      max-width: 350px; }
