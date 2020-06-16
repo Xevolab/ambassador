@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-05-22T21:14:46+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-06-15T17:56:16+02:00
+ * @Last modified time: 2020-06-16T11:37:31+02:00
  */
 
 /*
@@ -28,10 +28,7 @@ router.use((req, res, next) => {
 // Redis DB connection
 
 require('dotenv').config();
-let client = require('redis').createClient({
-  port      : process.env.REDIS_PORT,
-  host      : process.env.REDIS_HOST,
-  password  : process.env.REDIS_PSW,
+let client = require('redis').createClient(process.env.REDIS_URL, {
   retry_strategy: function(options) {
     if (options.error && options.error.code === "ECONNREFUSED") {
       // End reconnecting on a specific error and flush all commands with
