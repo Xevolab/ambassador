@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-05-22T21:14:46+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-06-16T11:37:31+02:00
+ * @Last modified time: 2020-07-11T20:56:44+02:00
  */
 
 /*
@@ -28,35 +28,38 @@ router.use((req, res, next) => {
 // Redis DB connection
 
 require('dotenv').config();
-let client = require('redis').createClient(process.env.REDIS_URL, {
-  retry_strategy: function(options) {
-    if (options.error && options.error.code === "ECONNREFUSED") {
-      // End reconnecting on a specific error and flush all commands with
-      // a individual error
-      return console.error("The server refused the connection");
-    }
-    if (options.total_retry_time > 1000 * 60 * 15) {
-      // End reconnecting after a specific timeout and flush all commands
-      // with a individual error
-      return console.error("Retry time exhausted");
-    }
-    if (options.attempt > 10) {
-      // End reconnecting with built in error
-      return undefined;
-    }
-    // reconnect after
-    return Math.min(options.attempt * 100, 3000);
-  }
-});
-
 let redis = false;
-client.on('ready', function() {
-  console.log('Redis client connected');
-  redis = client;
-});
-client.on('error', function (err) {
-  console.error("Redis connection error ", err);
-});
+if (process.env.REDIS_URL != null) {
+
+  let client = require('redis').createClient(process.env.REDIS_URL, {
+    retry_strategy: function(options) {
+      if (options.error && options.error.code === "ECONNREFUSED") {
+        // End reconnecting on a specific error and flush all commands with
+        // a individual error
+        return console.error("The server refused the connection");
+      }
+      if (options.total_retry_time > 1000 * 60 * 15) {
+        // End reconnecting after a specific timeout and flush all commands
+        // with a individual error
+        return console.error("Retry time exhausted");
+      }
+      if (options.attempt > 10) {
+        // End reconnecting with built in error
+        return undefined;
+      }
+      // reconnect after
+      return Math.min(options.attempt * 100, 3000);
+    }
+  });
+
+  client.on('ready', function() {
+    console.log('Redis client connected');
+    redis = client;
+  });
+  client.on('error', function (err) {
+    console.error("Redis connection error ", err);
+  });
+}
 
 // Payload
 const execute = require('./mid/cache-handler/index.js')
