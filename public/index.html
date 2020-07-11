@@ -151,7 +151,7 @@
             </div>
             <div class="tab" tab="card">
               <div class="box-text">
-                The page is analized to create a card field containing the title, description and an image for the web page. The unprocessed data can be accessed via the tags parameter.
+                The page is analized to create a card field containing the title, description and an image for the web page. Use the canonical title and description to get trimmed and normalized data (perfect if you don&apos;t want to create your own rules). The unprocessed data can be accessed via the tags parameter.
               </div>
               <div class="code">curl "http://ambassador.xevolab.com/v1?u=https://nytimes.com&<span class="highlight">card</span>"</div>
               <div class="code">
@@ -169,8 +169,14 @@
                 <div class="tab-3">"type": "html"</div>
                 <div class="tab-2">},</div>
                 <div class="tab-2">"card": {</div>
-                <div class="tab-3">"title": "Breaking News, World News & Multimedia",</div>
-                <div class="tab-3">"descr": "The New York Times:  Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",</div>
+                <div class="tab-3">"original": {</div>
+                <div class="tab-4">"title": "Breaking News, World News & Multimedia",</div>
+                <div class="tab-4">"descr": "The New York Times:  Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",</div>
+                <div class="tab-3">},</div>
+                <div class="tab-3">"canonical": {</div>
+                <div class="tab-4">"title": "Breaking News, World News & Multimedia",</div>
+                <div class="tab-4">"descr": "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real...",</div>
+                <div class="tab-3">},</div>
                 <div class="tab-3">"source": "nytimes.com",</div>
                 <div class="tab-3">"img": "https://static01.nyt.com/newsgraphics/images/icons/defaultPromoCrop.png",</div>
                 <div class="tab-3">"img_alt": null</div>
@@ -404,9 +410,9 @@
             `<div class="card-image" style="background-image: url('${cardDt.img}')"></div>` : ""
           }
           <div class="card-content">
-            <div class="card-title">${cardDt.title.split(/[\:\|\-\–\!]+/)[0]}</div>
-            ${ cardDt.descr !== null ?
-              `<div class="card-description">${cardDt.descr.substr(0, 150).split(" ").slice(0, -1).join(" ")}</div>` : ""
+            <div class="card-title">${cardDt.canonical.title}</div>
+            ${ cardDt.canonical.descr !== null ?
+              `<div class="card-description">${cardDt.canonical.descr}</div>` : ""
             }
             <div class="card-site">${cardDt.source}</div>
           </div><div class="card-service">${service}</div>`;
