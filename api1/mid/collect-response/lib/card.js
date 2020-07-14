@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-06-15T22:14:31+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-07-11T22:01:16+02:00
+ * @Last modified time: 2020-07-12T11:35:03+02:00
  */
 
 
@@ -63,14 +63,14 @@ module.exports = (d) => {
       descr: cardData.descr,
     },
     canonical: {
-      title: cardData.title.split(/[\:\|\-\–\!]+/)[0].trim(),
+      title: (cardData.title !== null ? cardData.title.split(/[\:\|\-\–\!]+/)[0].trim() : null),
       descr: cardData.descr,
     },
     source: cardData.source,
     img: cardData.img
   }
   // Fixing descrition
-  if (cardData.canonical.descr.length > 150) {
+  if (cardData.canonical.descr !== null && cardData.canonical.descr.length > 150) {
     // Normalize
     cardData.canonical.descr = cardData.canonical.descr.substr(0, 150).split(" ").slice(0, -1);
     // Removing trailing punctuation

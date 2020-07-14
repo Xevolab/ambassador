@@ -1,3 +1,11 @@
+/**
+ * @Author: francesco
+ * @Date:   2020-06-15T23:51:25+02:00
+ * @Last modified by:   francesco
+ * @Last modified time: 2020-07-12T17:43:46+02:00
+ */
+
+
 const axios = require('axios')
 const parseHeaders = require('./lib/parse-request-headers')
 const parseDom = require('./lib/parse-meta-tags')
@@ -20,7 +28,6 @@ module.exports = function (url, options) {
     }
 
     axios.request(requestOpts).then((response) => {
-
       if (!response) {
         return reject({errorCode: 'RES_EMPTY', retryable: true});
       }
@@ -58,6 +65,7 @@ module.exports = function (url, options) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
+
         if (err.message === "maxContentLength size of 2621440 exceeded") {
           try {
             return resolve(parseHeaders(err.request))
@@ -66,9 +74,17 @@ module.exports = function (url, options) {
             return reject({errorCode: 'GEN_ERROR', retryable: false});
           }
         }
+        else if (err.code === "ENOTFOUND") {
+          console.error(err.code);
+          return reject({errorCode: 'RES_NOT_FOUND', retryable: false});
+        }
+        else if (err.code === "ECONNABORTED") {
+          console.error(err.code);
+          return reject({errorCode: 'RES_CONN_ABORTED', retryable: false});
+        }
         else {
-          console.error(err);
-          return reject({errorCode: 'RES_UNRESP', retryable: true});
+          console.error(err.code);
+          return reject({errorCode: 'GEN_ERROR', retryable: false});
         }
       } else {
         // Something happened in setting up the request that triggered an Error
