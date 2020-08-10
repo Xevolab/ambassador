@@ -2,41 +2,43 @@
  * @Author: francesco
  * @Date:   2020-06-15T23:51:25+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-08-10T09:54:16+02:00
+ * @Last modified time: 2020-08-10T10:41:26+02:00
  */
 
 /**
  *   The url-gather actually calles the website and parses the return
  **/
 
-const Nightmare = require('nightmare')
-const nm = Nightmare({
-  webPreferences: {
-    images: false
-  },
-  width: 1024,
-  height: 768,
-  titleBarStyle: "hidden",
-  show: true
-})
+const Puppeteer = require('puppeteer');
 
 const parseHeaders = require('./lib/parse-request-headers')
 const parseDom = require('./lib/parse-meta-tags')
 
 module.exports = function (url, options) {
 
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
 
-    let r = nm.goto(url, {
-      'User-Agent': 'X-AMBS',
-      'Accept-Language': (options.lang != 'en' ? options.lang+",en;d=0.8" : 'en')
-    }).wait(240).screenshot().then((r) => {
-      nm.end().then(() => {
-        resolve(r)
-        console.log("there");
-      })
+    const browser = await Puppeteer.launch();
+    const page = await browser.newPage();
 
+    await page.setRequestInterception(true);
+
+    page.on('request', (req) => {
+      if(req.resourceType() === 'image'){
+        req.abort();
+      }
+      else {
+        req.continue();
+      }
+    });
+
+    await page.goto(url, { waitUntil: 'networkidle0' });
+    await page.screenshot().then((r) => {
+      resolve(r)
     })
+
+    browser.close()
+    //return resolve(true)
 
 
     // Axios request options
