@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-06-15T23:51:25+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-08-10T17:12:05+02:00
+ * @Last modified time: 2020-08-10T17:58:49+02:00
  */
 
 /**
@@ -19,7 +19,7 @@ module.exports = function (url, params) {
   return new Promise(async (resolve, reject) => {
 
     // Starting a new Puppeteer browser and page
-    const browser = await Puppeteer.launch({ args: ['--no-sandbox'] });
+    const browser = await Puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
 
     // Setting base options
@@ -89,7 +89,7 @@ module.exports = function (url, params) {
       }
     }
 
-    browser.close()
+    await browser.close()
     return resolve(reqData)
 
 
