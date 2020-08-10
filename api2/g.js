@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-05-22T21:14:46+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-08-10T09:46:10+02:00
+ * @Last modified time: 2020-08-10T12:00:48+02:00
  */
 
 /*
@@ -62,7 +62,7 @@ if (process.env.REDIS_URL != null && false) {
 }
 
 // Payload
-const execute = require('./mid/collect-response/index.js')
+const execute = require('./mid/cache-middleware/index.js')
 
 // Performance monitor
 const { PerformanceObserver, performance } = require('perf_hooks');
@@ -99,12 +99,11 @@ router.get(["/", "/:u"], (req, res) => {
   execute(u, params, redis).then((r) => {
     const t1 = performance.now();
 
-   return res.set({
-    'Content-Type': 'image/png',
-    'Content-Length': r.length
-  }).send(r);
+    // Remove raw data if not requested
+    if (!params.raw)
+      delete r.p.raw
 
-    res.status(200).json({okay: true, payload: r.p, service: Math.round(t1 - t0)+"ms", cache: r.c})
+    res.status(200).json({okay: true, ...r.p, service: Math.round(t1 - t0)+"ms", cache: r.c})
   }).catch((e) => {
     const t1 = performance.now();
     console.error(e);

@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-06-15T23:51:25+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-08-10T10:41:26+02:00
+ * @Last modified time: 2020-08-10T12:00:17+02:00
  */
 
 /**
@@ -14,31 +14,53 @@ const Puppeteer = require('puppeteer');
 const parseHeaders = require('./lib/parse-request-headers')
 const parseDom = require('./lib/parse-meta-tags')
 
-module.exports = function (url, options) {
+module.exports = function (url, params) {
 
   return new Promise(async (resolve, reject) => {
 
+    // Starting a new Puppeteer browser and page
     const browser = await Puppeteer.launch();
     const page = await browser.newPage();
 
+    // Setting base options
     await page.setRequestInterception(true);
+    await page.setUserAgent("X-AMB/2.0 (+http://ambassador.xevolab.com/bots.html)")
 
+    let target = url;
+    // Requests types metrics
+    let reqMetrics = {}
+
+    // Analizing request types
+    // Images, fonts and stylesheets are disabled to save time as they are not
+    // influential in analizing the final page
     page.on('request', (req) => {
-      if(req.resourceType() === 'image'){
+      let type = req.resourceType();
+      reqMetrics[type] = (reqMetrics[type] === undefined ? 1 : reqMetrics[type] + 1)
+
+      if (type === 'image' || type === "font" || type === "stylesheet")
         req.abort();
-      }
-      else {
+      else
         req.continue();
-      }
     });
 
-    await page.goto(url, { waitUntil: 'networkidle0' });
-    await page.screenshot().then((r) => {
-      resolve(r)
-    })
+    // Visiting the provided site
+    let req = await page.goto(url, { waitUntil: 'networkidle2' });
+
+    // Only 2xx request will be processed
+    if (req.status() < 200 || req.status() >= 300)
+      return reject({errorCode: 'INV_STS_CODE', retryable: true});
+
+    // Try to parse headers
+    try {
+      parsedHeaders = parseHeaders(req.headers())
+    } catch (e) {
+      return reject({errorCode: 'GEN_HEAD_ERROR', retryable: true});
+    }
+
 
     browser.close()
-    //return resolve(true)
+    console.log(reqMetrics, parsedHeaders, req.securityDetails());
+    return resolve({reqMetrics, parsedHeaders})
 
 
     // Axios request options
@@ -56,11 +78,7 @@ module.exports = function (url, options) {
       }
 
       // look at headers
-      try {
-        var parsedHeaders = parseHeaders(response.request)
-      } catch (e) {
-        return reject({errorCode: 'GEN_HEAD_ERROR', retryable: true});
-      }
+
 
       // No mime found --> No need to try to parse DOM
       if (parsedHeaders.mime === undefined)
@@ -83,7 +101,7 @@ module.exports = function (url, options) {
       if (err.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        return reject({errorCode: 'INV_STS_CODE', retryable: true});
+
       } else if (err.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
