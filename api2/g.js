@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-05-22T21:14:46+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-08-10T12:00:48+02:00
+ * @Last modified time: 2020-08-10T17:00:40+02:00
  */
 
 /*
@@ -29,7 +29,7 @@ router.use((req, res, next) => {
 
 require('dotenv').config();
 let redis = false;
-if (process.env.REDIS_URL != null && false) {
+if (process.env.REDIS_URL != null) {
 
   let client = require('redis').createClient(process.env.REDIS_URL, {
     retry_strategy: function(options) {

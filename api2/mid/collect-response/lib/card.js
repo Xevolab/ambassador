@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-06-15T22:14:31+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-07-12T11:35:03+02:00
+ * @Last modified time: 2020-08-10T16:52:56+02:00
  */
 
 
@@ -12,17 +12,17 @@ module.exports = (d) => {
 
   try {
 
-    switch (d.mime.type) {
+    switch (d.headers.mime.type) {
       case 'html':
         // Nothing to do
         if (d.tags === null && d.schema === null)
           return null;
 
         cardData = {
-          title: ((d.tags.ogBasic == null ? null : d.tags.ogBasic["og:title"]) || d.tags.basic.htmltitle || null),
-          descr: ((d.tags.ogBasic == null ? null : d.tags.ogBasic["og:description"]) || d.tags.basic.description || null),
+          title: ((d.dom.tags.ogBasic == null ? null : d.dom.tags.ogBasic["og:title"]) || d.dom.dom.title || null),
+          descr: ((d.dom.tags.ogBasic == null ? null : d.dom.tags.ogBasic["og:description"]) || d.dom.tags.basic.description || null),
           source: d.request.source,
-          img: ((d.tags.ogImage == null ? null : d.tags.ogImage["og:image"]) || d.tags.basic.image || null)
+          img: ((d.dom.tags.ogImage == null ? null : d.dom.tags.ogImage["og:image"]) || d.dom.tags.basic.image || null)
         }
 
         if (!RegExp(/^((?:https?:\/\/)[^./]+(?:\.[^./]+)+(?:\/.*)?)$/gi).test(cardData.img))
@@ -47,6 +47,7 @@ module.exports = (d) => {
     }
 
   } catch (e) {
+    console.error(e);
     return null;
   }
 

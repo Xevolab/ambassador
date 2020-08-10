@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-08-07T13:33:42+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-08-10T11:35:39+02:00
+ * @Last modified time: 2020-08-10T16:35:02+02:00
  */
 
 
@@ -19,13 +19,11 @@ const tagsMapping = {
 
 module.exports = function (res) {
 
-  var r = {
-    headers: mapHeaders(res, tagsMapping).basic
-  }
-
+  var r = mapHeaders(res, tagsMapping).basic
+  
   // Parse MIME type
-  if (typeof r.headers["content-type"] === "string")
-    r.mime = require('./mime')(r.headers["content-type"])
+  if (typeof r["content-type"] === "string")
+    r.mime = require('./mime')(r["content-type"])
 
   return r;
 }

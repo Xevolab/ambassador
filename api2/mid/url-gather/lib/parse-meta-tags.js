@@ -1,11 +1,20 @@
+/**
+ * @Author: francesco
+ * @Date:   2020-08-07T13:33:42+02:00
+ * @Last modified by:   francesco
+ * @Last modified time: 2020-08-10T17:00:33+02:00
+ */
+
+
 const cheerio = require('cheerio')
 
 const extractMetaTags = require('./extract-meta-tags')
 
+// Iterative mapping function
 const mapTags = require('./map')
+// List of all tags and how to map them
 const tagsMapping = {
   basic: {
-    htmltitle: ["html:title", null],
     keyword: ["keyword", null],
     description: ["description", null],
     subject: ["subject", null],
@@ -96,6 +105,17 @@ const tagsMapping = {
   },
 }
 
+// List of elements cheerio will be trying to extract from the page
+const cheerioExtract = [
+  ["title", "title"],
+  [".title", "title_class"],
+  ["#title", "title_id"],
+  ["h1", "h1"],
+  [".h1", "h1_class"],
+  ["h2", "h2"],
+  [".h2", "h2_class"]
+]
+
 module.exports = function (body) {
   const $ = cheerio.load(body, {decodeEntities: false})
   const scrapedMetaTags = extractMetaTags($)
@@ -108,15 +128,25 @@ module.exports = function (body) {
     }
   })
 
+  // Mapping tags
   let res = {
     tags: mapTags({...scrapedMetaTags,
-      'html:title': $('title').html() || null,
       'link:canonical': canonical
     }, tagsMapping),
+    dom: {}
   };
 
+  // Extracting from HTML DOM
+  for (var i in cheerioExtract) {
+    let chr = $(cheerioExtract[i][0]).first().text();
+    if (chr !== "")
+      res.dom[cheerioExtract[i][1]] = chr;
+  }
+
   try {
-    res.schema = JSON.parse($('script[type="application\/ld\+json"]').contents().first().text());
+    // For the moment, json-ld parsing is disabled as it was not being taken in cosideration anyway...
+    //
+    // res.schema = JSON.parse($('script[type="application\/ld\+json"]').contents().first().text());
   }
   finally {
     return res;

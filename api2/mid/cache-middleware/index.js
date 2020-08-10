@@ -1,3 +1,10 @@
+/**
+ * @Author: francesco
+ * @Date:   2020-08-07T13:33:42+02:00
+ * @Last modified by:   francesco
+ * @Last modified time: 2020-08-10T16:28:47+02:00
+ */
+
 
 const collect = require('./../collect-response/index.js')
 const cache = require('./cache.js')
@@ -49,7 +56,7 @@ module.exports = (u, params, redis) => { return new Promise((resolve, reject) =>
     // Handle errors first
 
     // Cache failed, results in
-    if (res.cache === "failed" && res.collect !== "empty") {
+    if (res.cache === "failed" && res.collect !== "empty" && res.collect !== "failed") {
       console.log("Cache error, sent collect for ", u);
       return resolve(pack(res.collect, {cached: false}))
     }

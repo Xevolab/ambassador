@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-06-15T23:51:25+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-08-10T12:00:17+02:00
+ * @Last modified time: 2020-08-10T16:38:59+02:00
  */
 
 /**
@@ -24,18 +24,23 @@ module.exports = function (url, params) {
 
     // Setting base options
     await page.setRequestInterception(true);
-    await page.setUserAgent("X-AMB/2.0 (+http://ambassador.xevolab.com/bots.html)")
+    await page.setExtraHTTPHeaders({
+      'Accept-Language': (params.lang != 'en' ? params.lang+",en;d=0.8" : 'en')
+    });
+    await page.setUserAgent("X-AMB/2.0 (+http://ambassador.xevolab.com/bots.html)");
 
     let target = url;
-    // Requests types metrics
-    let reqMetrics = {}
+    let reqData = {
+      requestMetrics: {},
+      headers: null
+    }
 
     // Analizing request types
     // Images, fonts and stylesheets are disabled to save time as they are not
     // influential in analizing the final page
     page.on('request', (req) => {
       let type = req.resourceType();
-      reqMetrics[type] = (reqMetrics[type] === undefined ? 1 : reqMetrics[type] + 1)
+      reqData.requestMetrics[type] = (reqData.requestMetrics[type] === undefined ? 1 : reqData.requestMetrics[type] + 1)
 
       if (type === 'image' || type === "font" || type === "stylesheet")
         req.abort();
@@ -44,23 +49,48 @@ module.exports = function (url, params) {
     });
 
     // Visiting the provided site
-    let req = await page.goto(url, { waitUntil: 'networkidle2' });
+    let req = null;
+    try {
+      req = await page.goto(url, { waitUntil: 'networkidle2' });
+    } catch (e) {
+      console.error(e);
+      return reject({errorCode: 'RES_CONN_ABORTED', retryable: false});
+    }
 
     // Only 2xx request will be processed
-    if (req.status() < 200 || req.status() >= 300)
+    if (!req.ok())
       return reject({errorCode: 'INV_STS_CODE', retryable: true});
 
     // Try to parse headers
     try {
-      parsedHeaders = parseHeaders(req.headers())
+      reqData.headers = parseHeaders(req.headers())
     } catch (e) {
+      console.error('GEN_HEAD_ERROR ', e);
       return reject({errorCode: 'GEN_HEAD_ERROR', retryable: true});
     }
 
+    // Request information
+    reqData.request = {
+      uri: page.url(),
+      source: page.url().split('://')[1].split('/')[0].split('.').slice(-2).join(".")
+    }
+
+    // Connection security
+    reqData.security = {_raw: req.securityDetails()}
+    reqData.security = {secure: (reqData.security._raw !== null), issuer: (reqData.security._raw !== null ? reqData.security._raw._issuer : null)}
+
+    // Parse the DOM
+    if (reqData.headers.mime.type === "html") {
+      try {
+        reqData.dom = parseDom(await page.content());
+      } catch (e) {
+        console.error("GEN_DOM_ERROR", e);
+        return reject({errorCode: 'GEN_DOM_ERROR', retryable: false});
+      }
+    }
 
     browser.close()
-    console.log(reqMetrics, parsedHeaders, req.securityDetails());
-    return resolve({reqMetrics, parsedHeaders})
+    return resolve(reqData)
 
 
     // Axios request options
@@ -86,14 +116,7 @@ module.exports = function (url, params) {
 
       var parsedDom = {};
       // Parse TAGS only if HTML mime found and required
-      if (parsedHeaders.mime.type === "html") {
-        try {
-          parsedDom = parseDom(response.data);
-        } catch (e) {
-          console.error("GEN_DOM_ERROR", e);
-          return reject({errorCode: 'GEN_DOM_ERROR', retryable: false});
-        }
-      }
+
 
       return resolve({...parsedHeaders, ...parsedDom});
 

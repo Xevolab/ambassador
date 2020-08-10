@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-08-07T13:33:42+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-08-10T11:59:46+02:00
+ * @Last modified time: 2020-08-10T16:29:21+02:00
  */
 
 
@@ -20,12 +20,11 @@ module.exports = (u, params) => { return new Promise((resolve, reject) => {
       raw: data
     }
 
-    //res.card = require('./lib/card')(data)
+    res.card = require('./lib/card')(data)
 
     return resolve(res)
 
   }).catch((e) => {
-    console.log(e);
     return reject(e);
   })
 
