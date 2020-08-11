@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-06-15T23:51:25+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-08-11T11:32:10+02:00
+ * @Last modified time: 2020-08-11T11:39:32+02:00
  */
 
 /**
@@ -23,10 +23,7 @@ module.exports = function (url, params) {
       '--no-sandbox',
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
-      '--disable-accelerated-2d-canvas',
-      '--no-first-run',
-      '--no-zygote',
-      '--disable-gpu'
+      '--disable-accelerated-2d-canvas'
     ] , headless: false});
     const page = await browser.newPage();
 
