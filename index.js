@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-05-22T21:15:21+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-05-22T21:56:32+02:00
+ * @Last modified time: 2020-08-07T13:42:59+02:00
  */
 
 
@@ -14,6 +14,7 @@ const http = require('http').createServer(app);
 
 // API entry point
 app.use(['/1/', '/v1/'], require('./api1/g.js'));
+app.use(['/2/', '/v2/'], require('./api2/g.js'));
 
 // Set a static folder
 app.use(express.static(path.join(__dirname, 'public')));
