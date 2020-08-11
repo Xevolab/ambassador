@@ -2,7 +2,7 @@
  * @Author: francesco
  * @Date:   2020-06-15T23:51:25+02:00
  * @Last modified by:   francesco
- * @Last modified time: 2020-08-10T17:58:49+02:00
+ * @Last modified time: 2020-08-11T11:32:10+02:00
  */
 
 /**
@@ -19,7 +19,15 @@ module.exports = function (url, params) {
   return new Promise(async (resolve, reject) => {
 
     // Starting a new Puppeteer browser and page
-    const browser = await Puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+    const browser = await Puppeteer.launch({ args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-accelerated-2d-canvas',
+      '--no-first-run',
+      '--no-zygote',
+      '--disable-gpu'
+    ] , headless: false});
     const page = await browser.newPage();
 
     // Setting base options
@@ -72,7 +80,8 @@ module.exports = function (url, params) {
     // Request information
     reqData.request = {
       uri: page.url(),
-      source: page.url().split('://')[1].split('/')[0].split('.').slice(-2).join(".")
+      source: page.url().split('://')[1].split('/')[0].split('.').slice(-2).join("."),
+      status: req.status()
     }
 
     // Connection security
@@ -87,6 +96,13 @@ module.exports = function (url, params) {
         console.error("GEN_DOM_ERROR", e);
         return reject({errorCode: 'GEN_DOM_ERROR', retryable: false});
       }
+    }
+
+    if (params.screenshot) {
+      let scr = await page.screenshot({
+        type: "jpeg",
+        quality: 75
+      });
     }
 
     await browser.close()
